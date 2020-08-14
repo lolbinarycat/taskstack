@@ -1,0 +1,13 @@
+package ll
+
+import "testing"
+import "reflect"
+
+func TestLL(t *testing.T) {
+	tl := New(6,7,8)
+	top2 := Peek(&tl,2)
+	if !reflect.DeepEqual(top2,[]int{8,7}) {
+		t.Fatal("expected []int{8,7}, got",top2)
+	}
+	
+}

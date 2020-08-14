@@ -1,0 +1,11 @@
+package ll
+
+// LL is a simple linked list
+type LL[type T] struct {
+	C T      // contents
+	N *LL[T] // next
+}
+
+func LLpush[type T](itm T) {
+
+}

@@ -1,0 +1,51 @@
+package ll
+
+// LL is a simple linked list
+type LL[type T] struct {
+	C T      // contents
+	N *LL[T] // next
+}
+
+func New[type T](items ...T) *LL[T] {
+	l := new(LL[T])
+	for _, itm := range items {
+		Push(&l,itm)
+	}
+	return l
+}
+
+func Push[type T](list **LL[T], itm T) {
+	newL := LL[T]{
+		C: itm,
+		N: *list,
+	}
+	*list = &newL
+}
+
+func Peek[type T](list **LL[T], n int) []T {
+	ret := make([]T,n)
+	cur := *list // current
+	for i := range ret {
+		ret[i] = cur.C
+		cur = cur.N // advance down the list
+	}
+	return ret
+}
+
+func Remove[type T](list **LL[T], index int, amount int) {
+	bef := Get[T](list,index-1)  // the item before the one we are going to remove
+	after := Get(&bef,amount+1)
+	bef.N = after
+}
+
+func Get[type T](list **LL[T], idx int) *LL[T] {
+	cur := *list
+	for i:=0;i<idx;i++ {
+		cur = cur.N
+	}
+	return cur
+}
+
+func unused() {
+
+}
