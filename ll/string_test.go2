@@ -1,0 +1,30 @@
+package ll
+
+import (
+	"testing"
+)
+
+// simple wrapper around string type
+type StrW string
+
+func (w StrW) String() string {
+	return string(w)
+}
+
+// test the StringI and StringS functions
+func TestStringS(t *testing.T) {
+	tl := New("goodbye","hello","hi")
+	assertEqual(t,"hi\nhello\ngoodbye\n",StringS(tl,StringifyOpts{Newlines: true}))
+}
+
+func TestStringI(t *testing.T) {
+	
+	tl := New(StrW("bye"),StrW("hi"))
+	assertEqual(t,"hibye",StringI(tl,StringifyOpts{}))
+}
+
+func assertEqual[type T comparable](t *testing.T, expt, actual T) {
+	if expt != actual {
+		t.Fatalf("Expected:\n%#v\nGot:\n%#v",expt,actual)
+	}
+}

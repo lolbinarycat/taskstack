@@ -1,0 +1,47 @@
+package ll
+
+import (
+	"strings"
+)
+
+type Stringable interface {
+	String() string
+}
+
+type StringifyOpts struct {
+	Newlines bool
+	// Seperator is only used when Newlines is false
+	Seperator string
+}
+
+// StringI is useful for defining .String() methods
+// on LLs that are defined around a type that implements
+// stringable
+func StringI[type T Stringable](list *LL[T], opts StringifyOpts) string {
+	var bldr strings.Builder
+
+	for cur := list;cur.N != nil; cur = cur.N {
+		bldr.WriteString(cur.C.String())
+		handleStringifyOpts(&bldr,opts)
+	}
+	return bldr.String()
+}
+
+// StringS is like StringI, but for the `string` type
+func StringS(list *LL[string], opts StringifyOpts) string {
+	var bldr strings.Builder
+
+	for cur := list;cur.N != nil; cur = cur.N {
+		bldr.WriteString(cur.C)
+		handleStringifyOpts(&bldr,opts)
+	}
+	return bldr.String()
+}
+
+func handleStringifyOpts(bldr *strings.Builder, opts StringifyOpts) {
+	if opts.Newlines {
+		bldr.WriteRune('\n')
+	} else {
+		bldr.WriteString(opts.Seperator)
+	}
+}

@@ -45,7 +45,3 @@ func Get[type T](list **LL[T], idx int) *LL[T] {
 	}
 	return cur
 }
-
-func unused() {
-
-}
